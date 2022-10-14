@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Portal from '@mui/base/Portal';
 
+//Taken from https://mui.com/material-ui/react-click-away-listener/#main-content
 export default function CartPreviewModal() {
   const [open, setOpen] = React.useState(false);
 
@@ -23,6 +24,7 @@ export default function CartPreviewModal() {
     top: 64,
     left: '80%',
     border: '1px solid',
+    minHeight: '40%',
     p: 1,
     bgcolor: 'background.paper',
   };
