@@ -75,12 +75,19 @@ function CartPreviewModal({ appState, removeOldItem }) {
               <List>
                 {appState.map((item:any, index:any) => (
                   <ListItem key={item.name} disablePadding>
-                    <ListItemButton onClick={() => removeOldItem(item)}>
-                      <ListItemIcon>
-                        <CloseIcon ></CloseIcon>
-                      </ListItemIcon>
-                    </ListItemButton>
-                    <ListItemText primary={item.name} />
+                    <Box justifyContent={'space-between'} display={'flex'} width={'100%'}>
+                      <Box marginLeft={1}>
+                        <IconButton onClick={() => removeOldItem(item)} >
+                          <CloseIcon></CloseIcon>
+                        </IconButton>
+                      </Box>
+                      <Typography noWrap gutterBottom fontSize={'20px'} component="span" marginTop={0.5}>
+                        {item.name}
+                      </Typography>
+                      <Typography noWrap gutterBottom fontSize={'20px'} component="span" marginTop={0.5} marginRight={2}>
+                        {item.price}
+                      </Typography>
+                    </Box>
                   </ListItem>
                 ))}
               </List>
