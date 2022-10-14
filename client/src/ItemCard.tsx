@@ -26,7 +26,7 @@ function ItemCard({ addNewItem, item }) {
         alt="green iguana"
       />
       <CardContent>
-        <Tooltip title={item.title} arrow enterDelay={500}>
+        <Tooltip title={item.name} arrow enterDelay={500} followCursor>
           <Typography noWrap gutterBottom variant="h5" component="div">
             {item.name}
           </Typography>
