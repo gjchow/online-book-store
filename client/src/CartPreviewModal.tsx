@@ -11,7 +11,7 @@ import { SxProps } from '@mui/system';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Drawer from '@mui/material/Drawer';
-import { getItems, removeFrom, addToCart } from './lib/cartData';
+import { removeFrom, addToCart } from './lib/cartData';
 import CloseIcon from '@mui/icons-material/Close';
 import { connect } from 'react-redux';
 import Typography from '@mui/material/Typography';
@@ -30,6 +30,10 @@ function CartPreviewModal({ appState, removeOldItem }) {
     setOpen(false);
   };
 
+  const removeItem = (item: any) => {
+    removeOldItem(item);
+  }
+
   // const styles: SxProps = {
   //   position: 'fixed',
   //   width: '20%',
@@ -40,8 +44,6 @@ function CartPreviewModal({ appState, removeOldItem }) {
   //   p: 1,
   //   bgcolor: 'background.paper',
   // };
-
-  console.log(appState);
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
@@ -73,7 +75,7 @@ function CartPreviewModal({ appState, removeOldItem }) {
               // onKeyDown={() => setOpen(false)}
             >
               <List>
-                {appState.map((item:any, index:any) => (
+                {appState.map((item: any, index:any) => (
                   <ListItem key={item.name} disablePadding>
                     <Box justifyContent={'space-between'} display={'flex'} width={'100%'}>
                       <Box marginLeft={1}>
@@ -139,8 +141,8 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  addNewItem: (item: any) => dispatch(addToCart(item)),
-  removeOldItem: (item: any) => dispatch(removeFrom(item)),
+  addNewItem: (item: any) => dispatch({ type: "ADD_ITEM", item}),
+  removeOldItem: (item: any) => dispatch({ type: "REMOVE_ITEM", item}),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartPreviewModal);

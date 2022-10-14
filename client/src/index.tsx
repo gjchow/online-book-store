@@ -5,10 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reducer from './store/reducer';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { Provider  } from 'react-redux';
+import thunk from 'redux-thunk'; 
+import { createStore, applyMiddleware, compose } from 'redux';
 
-let store = createStore(reducer);
+let store = createStore(
+  reducer,
+  compose(applyMiddleware(thunk)) 
+  );
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
