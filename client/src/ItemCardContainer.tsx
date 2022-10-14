@@ -13,12 +13,13 @@ export default function ItemCardContainer() {
   // this useEffect will run once
   // similar to componentDidMount()
   React.useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
+    const api = process.env.API_URL || "https://assignment-2-12-gjchow-ranachi.herokuapp.com/api";
+    fetch(`${api}/items`)
       .then(res => res.json())
       .then(
         (result) => {
           setIsLoaded(true);
-          setItems(result);
+          setItems(result.data);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow

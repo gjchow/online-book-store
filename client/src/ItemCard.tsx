@@ -6,12 +6,14 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
-import { addToCart } from './cartData';
+import { addToCart } from './lib/cartData';
+import { connect } from 'react-redux';
 
 //Taken from https://mui.com/material-ui/react-card/#main-content
-export default function ItemCard(props: any) {
+// @ts-ignore
+function ItemCard({ addNewItem, item }) {
   const handleClick = () => {
-    addToCart(props.item);
+    addNewItem(item);
   };
 
   return (
@@ -23,13 +25,13 @@ export default function ItemCard(props: any) {
         alt="green iguana"
       />
       <CardContent>
-        <Tooltip title={props.item.title} arrow enterDelay={500}>
+        <Tooltip title={item.title} arrow enterDelay={500}>
           <Typography noWrap gutterBottom variant="h5" component="div">
-            {props.item.title}
+            {item.name}
           </Typography>
         </Tooltip>
         <Typography variant="body2" color="text.secondary">
-          ${props.item.price}
+          ${item.price}
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "right"}}>
@@ -38,3 +40,13 @@ export default function ItemCard(props: any) {
     </Card>
   );
 }
+
+const mapStateToProps = (state: any) => ({
+  appState: state,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  addNewItem: (item: any) => dispatch(addToCart(item)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemCard);
