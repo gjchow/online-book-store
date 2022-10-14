@@ -22,7 +22,7 @@ function ItemCard({ addNewItem, item }) {
       <CardMedia
         component="img"
         height="140"
-        image="https://via.placeholder.com/150x75"
+        image={item.image}
         alt="green iguana"
       />
       <CardContent>

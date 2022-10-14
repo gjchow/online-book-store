@@ -84,7 +84,7 @@ function CartPreviewModal({ appState, removeOldItem }) {
                         </IconButton>
                       </Box>
                       <Typography noWrap gutterBottom fontSize={'20px'} component="span" marginTop={0.5}>
-                        {item.name}
+                       {item.quantity} X {item.name}
                       </Typography>
                       <Typography noWrap gutterBottom fontSize={'20px'} component="span" marginTop={0.5} marginRight={2}>
                         {item.price}
