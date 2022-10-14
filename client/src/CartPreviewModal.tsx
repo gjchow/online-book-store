@@ -14,6 +14,7 @@ import Drawer from '@mui/material/Drawer';
 import { getItems, removeFrom, addToCart } from './lib/cartData';
 import CloseIcon from '@mui/icons-material/Close';
 import { connect } from 'react-redux';
+import Typography from '@mui/material/Typography';
 
 //Taken from https://mui.com/material-ui/react-click-away-listener/#main-content
 // @ts-ignore
@@ -60,8 +61,13 @@ function CartPreviewModal({ appState, removeOldItem }) {
             open={open}
             onClose={() => setOpen(false)}
           >
+            <Box justifyContent={'space-between'} display={'flex'} flexDirection={'column'} height={'100%'}>
+              <Box display={'flex'} flexDirection={'column'}>
+            <Typography noWrap gutterBottom variant="h3" component="div" alignSelf={'center'} marginTop={2}>
+              My Cart
+            </Typography>
             <Box
-              sx={{ width: 350 }}
+              sx={{ width: 500 }}
               role="presentation"
               // onClick={() => setOpen(false)}
               // onKeyDown={() => setOpen(false)}
@@ -78,6 +84,42 @@ function CartPreviewModal({ appState, removeOldItem }) {
                   </ListItem>
                 ))}
               </List>
+            </Box>
+            </Box>
+            <Box>
+              <Box justifyContent={'space-between'} display={'flex'}>
+                <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
+                  Subtotal
+                </Typography>
+                <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
+                  $0.00
+                </Typography>
+              </Box>
+              <Box justifyContent={'space-between'} display={'flex'}>
+                <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
+                  Discount
+                </Typography>
+                <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={'red'}>
+                  -$0.00
+                </Typography>
+              </Box>
+              <Box justifyContent={'space-between'} display={'flex'}>
+                <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
+                  HST 13%
+                </Typography>
+                <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
+                  $0.00
+                </Typography>
+              </Box>
+              <Box justifyContent={'space-between'} display={'flex'}>
+                <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
+                  Total
+                </Typography>
+                <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
+                  $0.00
+                </Typography>
+              </Box>
+            </Box>
             </Box>
           </Drawer>
       </div>
