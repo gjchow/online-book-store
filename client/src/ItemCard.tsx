@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 // @ts-ignore
 function ItemCard({ addNewItem, item }) {
   const handleClick = () => {
+    item.quantity = 1;
     addNewItem(item);
   };
 
@@ -46,7 +47,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  addNewItem: (item: any) => dispatch(addToCart(item)),
+  addNewItem: (item: any) => dispatch({ type: "ADD_ITEM", item}),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemCard);
