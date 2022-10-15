@@ -18,10 +18,14 @@ function ItemCard({ addNewItem, item }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345, margin: 1 }}>
+    <Card sx={{ maxWidth: 345, margin: 1 }} >
       <CardMedia
+        style={{
+          width: "auto",
+          maxHeight: "250px",
+          margin: "auto",
+        }}
         component="img"
-        height="140"
         image={item.image}
         alt="green iguana"
       />
