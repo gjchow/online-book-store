@@ -1,3 +1,5 @@
+// Followed: https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers
+
 import { getItems, addToCart, removeFrom, destroyFrom } from '../lib/cartData';
 
 function reducer(state = getItems(), action) {

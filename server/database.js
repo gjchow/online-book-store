@@ -1,3 +1,5 @@
+// Based on https://github.com/SparkDevTeams/ds2020_mauricio/blob/master/server/database.js
+
 import mongoose from 'mongoose';
 import "dotenv/config";
 import Item from './models/item.js';

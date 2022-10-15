@@ -1,3 +1,5 @@
+// Followed Documentation: https://mongoosejs.com/docs/guide.html
+
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 

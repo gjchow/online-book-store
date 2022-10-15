@@ -1,3 +1,5 @@
+// Based on https://github.com/SparkDevTeams/ds2020_mauricio/blob/master/server/app.js
+
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
