@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import { Row, Col, Card } from "react-bootstrap";
 
 //Taken from https://reactjs.org/docs/faq-ajax.html
-export default function ItemCardContainer() {
+export default function ItemCardContainer(props: any) {
   const [error, setError] = React.useState<any>(null);
   const [isLoaded, setIsLoaded] = React.useState<boolean>(false);
   const [items, setItems] = React.useState<any[]>([]);
@@ -42,7 +42,7 @@ export default function ItemCardContainer() {
       <Row>
           {items.map((item, k) => (
               <Col key={k} xs={12} md={4} lg={3}>
-                  <ItemCard item={item}></ItemCard>
+                  <ItemCard item={item} theme={props.theme}></ItemCard>
               </Col>
           ))}
       </Row>
