@@ -18,7 +18,7 @@ function ItemCard({ addNewItem, item, theme }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345, margin: 1, backgroundColor: theme[30], borderRadius: 3, borderWidth: 0}} >
+    <Card sx={{ maxWidth: 345, marginTop: 2, backgroundColor: theme[30], borderRadius: 3, borderWidth: 0}} >
       <CardMedia
         style={{
           width: "auto",
