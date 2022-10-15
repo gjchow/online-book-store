@@ -1,4 +1,4 @@
-name: CI/CD
+name: Build and Deploy
 
 on:
   push:
@@ -27,23 +27,6 @@ jobs:
         with:
           name: build-folder
           path: ./client/build
-  
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - working-directory: client
-        run: npm install
-      - working-directory: client
-        run: npm test a
-    
 
   deploy:
     runs-on: ubuntu-latest
