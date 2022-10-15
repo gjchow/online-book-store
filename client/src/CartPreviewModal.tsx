@@ -1,17 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import Button from '@mui/material/Button';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import { SxProps } from '@mui/system';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Drawer from '@mui/material/Drawer';
-import { removeFrom, addToCart } from './lib/cartData';
 import CloseIcon from '@mui/icons-material/Close';
 import { connect } from 'react-redux';
 import Typography from '@mui/material/Typography';
@@ -75,15 +69,16 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
           isCouponValid = result.valid;
         }
       );
-      console.log(isCouponValid);
-
 
     if(!isCouponValid) {
       setInvalidCode(true);
       sethelperMessage("Invalid Coupon Code");
     } else {
       let applyCode = false;
-      await fetch(`${api}/check-coupon/${couponCode}`)
+      await fetch(`${api}/check-coupon/${couponCode}`, {
+        method: "POST",
+        body: JSON.stringify({ itemNames: appState.map((i: any) => i.name)})
+      })
       .then(res => res.json())
       .then(
         (result) => {
@@ -94,50 +89,30 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
         setInvalidCode(true);
         sethelperMessage("Can't apply Coupon Code to items in your cart");
       } else {
-        let coupons: any[] = [];
-        await fetch(`${api}/coupons`)
+        let coupon: any = {};
+        await fetch(`${api}/coupon/${couponCode}`)
         .then(res => res.json())
         .then(
           (result) => {
-            coupons = result.data;
+            coupon = result.data;
           }
         );
-        const couponResults = coupons.filter(c => c.id === couponCode);
-        const coupon = couponResults[0];
         
         if (coupon.discount.type === "DOLLAR") {
           setInvalidCode(false);
+          sethelperMessage("");
           setDiscount(coupon.discount.value);
         }
       }
     }
   }
 
-
-  // const styles: SxProps = {
-  //   position: 'fixed',
-  //   width: '20%',
-  //   top: 64,
-  //   left: '80%',
-  //   border: '1px solid',
-  //   minHeight: '40%',
-  //   p: 1,
-  //   bgcolor: 'background.paper',
-  // };
-
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <div>
-        <IconButton onClick={handleClick}>
-          <ShoppingCart sx={{color: theme[60]}}/>
+        <IconButton data-testid="shoppingCartBtn" onClick={handleClick}>
+          <ShoppingCart  sx={{color: theme[60]}}/>
         </IconButton>
-        {/* {open ? (
-          <Portal>
-            <Box sx={styles}>
-              Currently no items.
-            </Box>
-          </Portal>
-        ) : null} */}
          <Drawer
             anchor={'right'}
             open={open}
@@ -156,8 +131,6 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
                 <Box
                   sx={{  }}
                   role="presentation"
-                  // onClick={() => setOpen(false)}
-                  // onKeyDown={() => setOpen(false)}
                 >
                   <List disablePadding>
                     {appState.map((item: any, index:any) => (
@@ -180,11 +153,11 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
                                     <RemoveIcon sx={{ fontSize: '20px', color: theme[30]}}></RemoveIcon>
                                   </IconButton>
                                 </Box>
-                                <Typography noWrap gutterBottom fontSize={'16px'} component="div" alignItems={'center'} marginTop={-0.5} color={theme[30]}>
+                                <Typography data-testid="quantity" noWrap gutterBottom fontSize={'16px'} component="div" alignItems={'center'} marginTop={-0.5} color={theme[30]}>
                                   {item.quantity}
                                 </Typography>
                                 <Box marginTop={-1.25}>
-                                  <IconButton onClick={() => addNewItem(item)}>
+                                  <IconButton data-testid="increaseQuantity" onClick={() => addNewItem(item)}>
                                     <AddIcon sx={{ fontSize: '20px', color: theme[30]}}></AddIcon>
                                   </IconButton>
                                 </Box>
@@ -214,15 +187,12 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
                       onChange={handleChange}
                       inputProps={{ style: { borderColor: theme[30]}}}
                     />
-                    {/* <Button type="submit">
-                        Add Code
-                    </Button> */}
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
                   <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[30]}>
                     Subtotal
                   </Typography>
-                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[30]}>
+                  <Typography data-testid="cartSubtotal" noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[30]}>
                     ${parseFloat(`${appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) }`).toFixed(2)}
                   </Typography>
                 </Box>
@@ -239,15 +209,15 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
                     HST 13%
                   </Typography>
                   <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[30]}>
-                    ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 0.13}`).toFixed(2)}
+                    ${parseFloat(`${Math.max(0,(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 0.13)}`).toFixed(2)}
                   </Typography>
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
                   <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[30]}>
                     Total
                   </Typography>
-                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[30]}>
-                  ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 1.13}`).toFixed(2)}
+                  <Typography data-testid="cartTotal" noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[30]}>
+                  ${parseFloat(`${Math.max(0,(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 1.13)}`).toFixed(2)}
                   </Typography>
                 </Box>
               </Box>

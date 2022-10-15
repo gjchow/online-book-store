@@ -1,0 +1,49 @@
+# Referenced https://github.com/actions/setup-node and https://github.com/marketplace/actions/deploy-to-heroku
+
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - working-directory: client
+        run: npm install
+      - working-directory: client
+        run: CI=false npm run build --if-present
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-folder
+          path: ./client/build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-folder
+          path: ./server/client
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "assignment-2-12-gjchow-ranachi" #Must be unique in Heroku
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          appdir: "server"
+          usedocker: true

@@ -1,3 +1,5 @@
+// Based on https://github.com/SparkDevTeams/ds2020_mauricio/blob/master/server/server.js
+
 import app from './app.js';
 import {connectDB} from './database.js';
 import "dotenv/config";
