@@ -35,7 +35,7 @@ async function getCoupon(couponId) {
 }
 
 async function checkCoupon(couponId, items) {
-  const coupons = await Coupon.findOne({ id: couponId }, 'id tags items discount');
+  const coupons = await Coupon.find({ id: couponId });
 
   const coupon =  coupons[0];
 
