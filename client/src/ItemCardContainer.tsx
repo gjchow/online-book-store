@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ItemCard from './ItemCard';
 import Container from 'react-bootstrap/Container';
-import { Row, Col, Card } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 //Taken from https://reactjs.org/docs/faq-ajax.html
 export default function ItemCardContainer() {
@@ -38,7 +38,7 @@ export default function ItemCardContainer() {
   } else {
     return (
       //Layout from https://javascript.plainenglish.io/render-react-cards-and-images-dynamically-2387434e809d
-      <Container>
+      <Container data-testid="itemsContainer">
       <Row>
           {items.map((item, k) => (
               <Col key={k} xs={12} md={4} lg={3}>

@@ -6,7 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
-import { addToCart } from './lib/cartData';
 import { connect } from 'react-redux';
 
 //Taken from https://mui.com/material-ui/react-card/#main-content
@@ -27,15 +26,15 @@ function ItemCard({ addNewItem, item }) {
         }}
         component="img"
         image={item.image}
-        alt="green iguana"
+        alt="item"
       />
       <CardContent>
         <Tooltip title={item.name} arrow enterDelay={500} followCursor>
-          <Typography noWrap gutterBottom variant="h5" component="div">
+          <Typography data-testid="itemName" noWrap gutterBottom variant="h5" component="div">
             {item.name}
           </Typography>
         </Tooltip>
-        <Typography variant="body1" color="text.secondary">
+        <Typography data-testid="itemPrice" variant="body1" color="text.secondary">
           ${item.price}
         </Typography>
       </CardContent>

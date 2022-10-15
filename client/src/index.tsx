@@ -9,7 +9,7 @@ import { Provider  } from 'react-redux';
 import thunk from 'redux-thunk'; 
 import { createStore, applyMiddleware, compose } from 'redux';
 
-let store = createStore(
+export const store = createStore(
   reducer,
   compose(applyMiddleware(thunk)) 
   );
@@ -17,6 +17,7 @@ let store = createStore(
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
