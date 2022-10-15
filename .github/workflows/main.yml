@@ -3,7 +3,7 @@ name: CI/CD
 on:
   push:
     branches:
-      - master # Changing the branch here would also work
+      - master
 
 jobs:
 
@@ -28,19 +28,19 @@ jobs:
           name: build-folder
           path: ./client/build
   
-#   test:
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         node-version: [18.x]
-#     steps:
-#       - uses: actions/checkout@v3
-#       - name: Use Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: ${{ matrix.node-version }}
-#       - working-directory: client
-#         run: npm test
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - working-directory: client
+        run: npm test
     
 
   deploy:
