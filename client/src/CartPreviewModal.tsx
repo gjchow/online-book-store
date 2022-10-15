@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import TextField from '@mui/material/TextField';
 
 
 //Taken from https://mui.com/material-ui/react-click-away-listener/#main-content
@@ -125,6 +126,14 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
               </Box>
               <Box>
                 <Box width={'100%'} height={0} borderTop={1}></Box>
+                <Box component="form" noValidate autoComplete="off" display={'flex'} justifyContent={'center'}>
+                <TextField
+                  id="coupon-code"
+                  label="Coupon Code"
+                  margin={'normal'}
+                  sx={{width: '95%', borderColor: 'black', alignSelf: 'center'}}
+                />
+                </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
                   <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
                     Subtotal
