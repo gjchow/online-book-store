@@ -27,6 +27,12 @@ async function validateCoupon(couponId) {
   return true;
 }
 
+async function getCoupon(couponId) {
+  const coupons = await Coupon.find({ id: couponId });
+  const coupon =  coupons[0];
+  return coupon;
+}
+
 async function checkCoupon(couponId, items) {
   const coupons = await Coupon.find({ id: couponId });
 
@@ -51,6 +57,7 @@ export {
   connectDB,
   getAllItems,
   getAllCoupons,
+  getCoupon,
   validateCoupon,
   checkCoupon,
 }
