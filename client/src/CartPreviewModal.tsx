@@ -1,17 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import Button from '@mui/material/Button';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import { SxProps } from '@mui/system';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Drawer from '@mui/material/Drawer';
-import { removeFrom, addToCart } from './lib/cartData';
 import CloseIcon from '@mui/icons-material/Close';
 import { connect } from 'react-redux';
 import Typography from '@mui/material/Typography';
@@ -93,31 +87,12 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
     }
   }
 
-
-  // const styles: SxProps = {
-  //   position: 'fixed',
-  //   width: '20%',
-  //   top: 64,
-  //   left: '80%',
-  //   border: '1px solid',
-  //   minHeight: '40%',
-  //   p: 1,
-  //   bgcolor: 'background.paper',
-  // };
-
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <div>
-        <IconButton onClick={handleClick}>
-          <ShoppingCart/>
+        <IconButton data-testid="shoppingCartBtn" onClick={handleClick}>
+          <ShoppingCart />
         </IconButton>
-        {/* {open ? (
-          <Portal>
-            <Box sx={styles}>
-              Currently no items.
-            </Box>
-          </Portal>
-        ) : null} */}
          <Drawer
             anchor={'right'}
             open={open}
@@ -134,8 +109,6 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
                 <Box
                   sx={{  }}
                   role="presentation"
-                  // onClick={() => setOpen(false)}
-                  // onKeyDown={() => setOpen(false)}
                 >
                   <List>
                     {appState.map((item: any, index:any) => (
@@ -158,11 +131,11 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
                                     <RemoveIcon sx={{ fontSize: '20px'}}></RemoveIcon>
                                   </IconButton>
                                 </Box>
-                                <Typography noWrap gutterBottom fontSize={'16px'} component="div" alignItems={'center'} marginTop={-0.5}>
+                                <Typography data-testid="quantity" noWrap gutterBottom fontSize={'16px'} component="div" alignItems={'center'} marginTop={-0.5}>
                                   {item.quantity}
                                 </Typography>
                                 <Box marginTop={-1.25}>
-                                  <IconButton onClick={() => addNewItem(item)}>
+                                  <IconButton data-testid="increaseQuantity" onClick={() => addNewItem(item)}>
                                     <AddIcon sx={{ fontSize: '20px'}}></AddIcon>
                                   </IconButton>
                                 </Box>
@@ -191,15 +164,12 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
                       value={couponCode}
                       onChange={handleChange}
                     />
-                    {/* <Button type="submit">
-                        Add Code
-                    </Button> */}
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
                   <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
                     Subtotal
                   </Typography>
-                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
+                  <Typography data-testid="cartSubtotal" noWrap gutterBottom variant="h5" component="span" marginRight={2}>
                     ${parseFloat(`${appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) }`).toFixed(2)}
                   </Typography>
                 </Box>
@@ -216,15 +186,15 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
                     HST 13%
                   </Typography>
                   <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
-                    ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 0.13}`).toFixed(2)}
+                    ${parseFloat(`${Math.max(0,(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 0.13)}`).toFixed(2)}
                   </Typography>
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
                   <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
                     Total
                   </Typography>
-                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
-                  ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 1.13}`).toFixed(2)}
+                  <Typography data-testid="cartTotal" noWrap gutterBottom variant="h5" component="span" marginRight={2}>
+                  ${parseFloat(`${Math.max(0,(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 1.13)}`).toFixed(2)}
                   </Typography>
                 </Box>
               </Box>
