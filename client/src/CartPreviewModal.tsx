@@ -48,15 +48,16 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
     event.preventDefault();
     const api = process.env.API_URL || "https://assignment-2-12-gjchow-ranachi.herokuapp.com/api";
     let isCouponValid = false;
-    await fetch(`${api}/validate-coupon/${couponCode}`)
+    await fetch(`${api}/validate-coupon/${couponCode}`, {
+      method: "POST",
+      body: JSON.stringify(appState.map((i: any) => i.name))
+    })
       .then(res => res.json())
       .then(
         (result) => {
           isCouponValid = result.valid;
         }
       );
-      console.log(isCouponValid);
-
 
     if(!isCouponValid) {
       setInvalidCode(true);
@@ -74,19 +75,18 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
         setInvalidCode(true);
         sethelperMessage("Can't apply Coupon Code to items in your cart");
       } else {
-        let coupons: any[] = [];
-        await fetch(`${api}/coupons`)
+        let coupon: any = {};
+        await fetch(`${api}/coupons/${couponCode}`)
         .then(res => res.json())
         .then(
           (result) => {
-            coupons = result.data;
+            coupon = result.data;
           }
         );
-        const couponResults = coupons.filter(c => c.id === couponCode);
-        const coupon = couponResults[0];
         
         if (coupon.discount.type === "DOLLAR") {
           setInvalidCode(false);
+          sethelperMessage("");
           setDiscount(coupon.discount.value);
         }
       }

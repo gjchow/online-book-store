@@ -4,7 +4,8 @@ import {
   validateCoupon, 
   checkCoupon, 
   getAllCoupons,
-  getAllItems 
+  getAllItems,
+  getCoupon
 } from "./database.js";
 
 // Setup server
@@ -24,15 +25,21 @@ app.get('/api/coupons', async (req, res) => {
   });
 });
 
+app.get('/api/coupon/:id', async (req, res) => {
+  res.send({
+    data: await getCoupon(req.params.id)
+  });
+});
+
 app.get('/api/validate-coupon/:id', async (req, res) => {
   res.send({
     valid: await validateCoupon(req.params.id)
   });
 });
 
-app.get('/api/check-coupon/:id', async (req, res) => {
+app.post('/api/check-coupon/:id', async (req, res) => {
   res.send({
-    apply: await checkCoupon(req.params.id, req.itemNames)
+    apply: await checkCoupon(req.params.id, req.body.itemNames)
   });
 });
 
