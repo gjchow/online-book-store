@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
+import Button from '@mui/material/Button';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -25,10 +25,9 @@ import TextField from '@mui/material/TextField';
 function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem }) {
   const [open, setOpen] = React.useState(false);
   const [discount, setDiscount] = React.useState(0);
-
-  // setSubtotal(appState.reduce((a:any, b:any) => (a.price * a.quantity) + (b.price * b.quantity), 0));
-
-  // const [cartItems, setItems] = React.useState(getItems());
+  const [invalidCode, setInvalidCode] = React.useState(false);
+  const [couponCode, setCouponCode] = React.useState("");
+  const [helperMessage, sethelperMessage] = React.useState("");
 
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -36,8 +35,63 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
 
   const handleClickAway = () => {
     setOpen(false);
+    setInvalidCode(false);
+    setCouponCode("");
+    sethelperMessage("");
   };
 
+  const handleChange = (event: any) => {
+    setCouponCode(event.target.value);
+  }
+
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    const api = process.env.API_URL || "https://assignment-2-12-gjchow-ranachi.herokuapp.com/api";
+    let isCouponValid = false;
+    await fetch(`${api}/validate-coupon/${couponCode}`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          isCouponValid = result.valid;
+        }
+      );
+      console.log(isCouponValid);
+
+
+    if(!isCouponValid) {
+      setInvalidCode(true);
+      sethelperMessage("Invalid Coupon Code");
+    } else {
+      let applyCode = false;
+      await fetch(`${api}/check-coupon/${couponCode}`)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          applyCode = result.apply;
+        }
+      );
+      if (!applyCode) {
+        setInvalidCode(true);
+        sethelperMessage("Can't apply Coupon Code to items in your cart");
+      } else {
+        let coupons: any[] = [];
+        await fetch(`${api}/coupons`)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            coupons = result.data;
+          }
+        );
+        const couponResults = coupons.filter(c => c.id === couponCode);
+        const coupon = couponResults[0];
+        
+        if (coupon.discount.type === "DOLLAR") {
+          setInvalidCode(false);
+          setDiscount(coupon.discount.value);
+        }
+      }
+    }
+  }
 
 
   // const styles: SxProps = {
@@ -67,7 +121,7 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
          <Drawer
             anchor={'right'}
             open={open}
-            onClose={() => setOpen(false)}
+            onClose={() => handleClickAway()}
             PaperProps={{
               sx: { width: "95%", maxWidth: 500 },
             }}
@@ -126,13 +180,20 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
               </Box>
               <Box>
                 <Box width={'100%'} height={0} borderTop={1}></Box>
-                <Box component="form" noValidate autoComplete="off" display={'flex'} justifyContent={'center'}>
-                <TextField
-                  id="coupon-code"
-                  label="Coupon Code"
-                  margin={'normal'}
-                  sx={{width: '95%', borderColor: 'black', alignSelf: 'center'}}
-                />
+                <Box component="form" noValidate autoComplete="off" display={'flex'} justifyContent={'center'} onSubmit={async (e) => await handleSubmit(e)}>
+                    <TextField
+                      error={invalidCode}
+                      id="coupon-code"
+                      label="Coupon Code"
+                      margin={'normal'}
+                      sx={{width: '95%', borderColor: 'black', alignSelf: 'center'}}
+                      helperText={helperMessage}
+                      value={couponCode}
+                      onChange={handleChange}
+                    />
+                    {/* <Button type="submit">
+                        Add Code
+                    </Button> */}
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
                   <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
