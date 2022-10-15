@@ -67,94 +67,97 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
             anchor={'right'}
             open={open}
             onClose={() => setOpen(false)}
+            PaperProps={{
+              sx: { width: "95%", maxWidth: 500 },
+            }}
           >
             <Box justifyContent={'space-between'} display={'flex'} flexDirection={'column'} height={'100%'}>
               <Box display={'flex'} flexDirection={'column'}>
-            <Typography noWrap gutterBottom variant="h3" component="div" alignSelf={'center'} marginTop={2}>
-              My Cart
-            </Typography>
-            <Box
-              sx={{ width: 500 }}
-              role="presentation"
-              // onClick={() => setOpen(false)}
-              // onKeyDown={() => setOpen(false)}
-            >
-              <List>
-                {appState.map((item: any, index:any) => (
-                  <ListItem key={item.name} disablePadding>
-                    <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'column'} width={'100%'}>
-                      <Box width={'100%'} height={0} borderTop={1} marginBottom={1}></Box>
-                      <Box justifyContent={'space-between'} display={'flex'} width={'100%'}>
-                        <Box marginLeft={1}>
-                          <IconButton onClick={() => destroyOldItem(item)} >
-                            <CloseIcon></CloseIcon>
-                          </IconButton>
-                        </Box>
-                        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'column'}>
-                          <Typography noWrap gutterBottom fontSize={'px'} component="div" alignItems={'center'}>
-                          {item.name}
-                          </Typography>
-                          <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'row'}>
-                            <Box marginTop={-1.25}>
-                              <IconButton onClick={() => removeOldItem(item)} >
-                                <RemoveIcon sx={{ fontSize: '20px'}}></RemoveIcon>
+                <Typography noWrap gutterBottom variant="h4" component="div" alignSelf={'center'} marginTop={2}>
+                  My Cart
+                </Typography>
+                <Box
+                  sx={{  }}
+                  role="presentation"
+                  // onClick={() => setOpen(false)}
+                  // onKeyDown={() => setOpen(false)}
+                >
+                  <List>
+                    {appState.map((item: any, index:any) => (
+                      <ListItem key={item.name} disablePadding>
+                        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'column'} width={'100%'}>
+                          <Box width={'100%'} height={0} borderTop={1} marginBottom={1}></Box>
+                          <Box justifyContent={'space-between'} display={'flex'} width={'100%'}>
+                            <Box marginRight={1} marginLeft={1}>
+                              <IconButton onClick={() => destroyOldItem(item)} >
+                                <CloseIcon></CloseIcon>
                               </IconButton>
                             </Box>
-                            <Typography noWrap gutterBottom fontSize={'16px'} component="div" alignItems={'center'} marginTop={-0.5}>
-                              {item.quantity}
+                            <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'column'} marginRight={1} marginLeft={1}>
+                              <Typography noWrap gutterBottom fontSize={'px'} component="div" alignItems={'center'}>
+                              {item.name}
+                              </Typography>
+                              <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'row'}>
+                                <Box marginTop={-1.25}>
+                                  <IconButton onClick={() => removeOldItem(item)} >
+                                    <RemoveIcon sx={{ fontSize: '20px'}}></RemoveIcon>
+                                  </IconButton>
+                                </Box>
+                                <Typography noWrap gutterBottom fontSize={'16px'} component="div" alignItems={'center'} marginTop={-0.5}>
+                                  {item.quantity}
+                                </Typography>
+                                <Box marginTop={-1.25}>
+                                  <IconButton onClick={() => addNewItem(item)}>
+                                    <AddIcon sx={{ fontSize: '20px'}}></AddIcon>
+                                  </IconButton>
+                                </Box>
+                              </Box>
+                            </Box>
+                            <Typography noWrap gutterBottom fontSize={'20px'} marginTop={0.5} marginRight={2} marginLeft={1}>
+                              ${parseFloat(`${item.price * item.quantity}`).toFixed(2)}
                             </Typography>
-                            <Box marginTop={-1.25}>
-                              <IconButton onClick={() => addNewItem(item)}>
-                                <AddIcon sx={{ fontSize: '20px'}}></AddIcon>
-                              </IconButton>
-                            </Box>
                           </Box>
                         </Box>
-                        <Typography noWrap gutterBottom fontSize={'20px'} marginTop={0.5} marginRight={2}>
-                          ${parseFloat(`${item.price * item.quantity}`).toFixed(2)}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </ListItem>
-                ))}
-              </List>
-            </Box>
-            </Box>
-            <Box>
-              <Box width={'100%'} height={0} borderTop={1}></Box>
-              <Box justifyContent={'space-between'} display={'flex'}>
-                <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
-                  Subtotal
-                </Typography>
-                <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
-                  ${parseFloat(`${appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) }`).toFixed(2)}
-                </Typography>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
               </Box>
-              <Box justifyContent={'space-between'} display={'flex'}>
-                <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
-                  Discount
-                </Typography>
-                <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={'red'}>
-                  -${parseFloat(`${discount}`).toFixed(2)}
-                </Typography>
+              <Box>
+                <Box width={'100%'} height={0} borderTop={1}></Box>
+                <Box justifyContent={'space-between'} display={'flex'}>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
+                    Subtotal
+                  </Typography>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
+                    ${parseFloat(`${appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) }`).toFixed(2)}
+                  </Typography>
+                </Box>
+                <Box justifyContent={'space-between'} display={'flex'}>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
+                    Discount
+                  </Typography>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={'red'}>
+                    -${parseFloat(`${discount}`).toFixed(2)}
+                  </Typography>
+                </Box>
+                <Box justifyContent={'space-between'} display={'flex'}>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
+                    HST 13%
+                  </Typography>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
+                    ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 0.13}`).toFixed(2)}
+                  </Typography>
+                </Box>
+                <Box justifyContent={'space-between'} display={'flex'}>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
+                    Total
+                  </Typography>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
+                  ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 1.13}`).toFixed(2)}
+                  </Typography>
+                </Box>
               </Box>
-              <Box justifyContent={'space-between'} display={'flex'}>
-                <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
-                  HST 13%
-                </Typography>
-                <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
-                  ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 0.13}`).toFixed(2)}
-                </Typography>
-              </Box>
-              <Box justifyContent={'space-between'} display={'flex'}>
-                <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
-                  Total
-                </Typography>
-                <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
-                ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 1.13}`).toFixed(2)}
-                </Typography>
-              </Box>
-            </Box>
             </Box>
           </Drawer>
       </div>
