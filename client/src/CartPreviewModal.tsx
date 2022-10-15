@@ -48,10 +48,7 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
     event.preventDefault();
     const api = process.env.API_URL || "https://assignment-2-12-gjchow-ranachi.herokuapp.com/api";
     let isCouponValid = false;
-    await fetch(`${api}/validate-coupon/${couponCode}`, {
-      method: "POST",
-      body: JSON.stringify(appState.map((i: any) => i.name))
-    })
+    await fetch(`${api}/validate-coupon/${couponCode}`)
       .then(res => res.json())
       .then(
         (result) => {
@@ -64,7 +61,10 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
       sethelperMessage("Invalid Coupon Code");
     } else {
       let applyCode = false;
-      await fetch(`${api}/check-coupon/${couponCode}`)
+      await fetch(`${api}/check-coupon/${couponCode}`, {
+        method: "POST",
+        body: JSON.stringify(appState.map((i: any) => i.name))
+      })
       .then(res => res.json())
       .then(
         (result) => {
