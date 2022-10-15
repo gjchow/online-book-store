@@ -40,6 +40,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - working-directory: client
+        run: npm install
+      - working-directory: client
         run: npm test a
     
 
