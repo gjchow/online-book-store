@@ -47,7 +47,7 @@ async function checkCoupon(couponId, items) {
 
   const couponItems =  coupons[0].items;
 
-  for (let i = 0; i < couponItems; i++) {
+  for (let i = 0; i < couponItems.length; i++) {
     if (items.find(item => couponItems[i] == item)) {
       return true;
     }
