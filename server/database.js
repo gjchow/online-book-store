@@ -29,12 +29,13 @@ async function validateCoupon(couponId) {
 
 async function getCoupon(couponId) {
   const coupons = await Coupon.find({ id: couponId });
+  console.log(coupons);
   const coupon =  coupons[0];
   return coupon;
 }
 
 async function checkCoupon(couponId, items) {
-  const coupons = await Coupon.find({ id: couponId });
+  const coupons = await Coupon.findOne({ id: couponId }, 'id tags items discount');
 
   const coupon =  coupons[0];
 
