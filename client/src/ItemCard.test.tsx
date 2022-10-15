@@ -16,7 +16,7 @@ test("Displays correct item information", () => {
   const item = {name:"item1", quantity: 1, price: 31.31, image: "", tags: []};
   render(
     <Provider store={store}>
-      <ItemCard item={item} />
+      <ItemCard item={item} theme='{}' />
     </Provider>
   );
   const itemName = screen.getByTestId("itemName");

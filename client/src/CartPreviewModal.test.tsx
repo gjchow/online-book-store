@@ -14,7 +14,7 @@ export const store = createStore(
 test("Shopping cart sidebar opens and cart totals exist", () => {
   render(
     <Provider store={store}>
-      <CartPreviewModal />
+      <CartPreviewModal theme='{}' />
     </Provider>
   );
 
