@@ -75,7 +75,7 @@ Dockerfile is based on this guide:
 Mongoose Schemas is based on the documentation:
 * https://mongoosejs.com/docs/guide.html
 
-For setting up statemanagement:
+For setting up state management in React:
 * https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers
 
 For setting up Heroku Deployment using Github Actions:
