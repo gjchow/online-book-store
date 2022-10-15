@@ -6,7 +6,11 @@ The application is deployed: https://assignment-2-12-gjchow-ranachi.herokuapp.co
 
 ## Application
 
+[Application Demo](./images/appdemo.mov)
 
+* Notes:
+  * Coupon code: 1111 applies $10 discount to any book
+  * Coupon code: 1234 applies $5 discount only if books "Hard Times" and "It Starts With Us" are in the cart
 
 ## Running Unit Tests
 
