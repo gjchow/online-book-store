@@ -1,4 +1,4 @@
-import { getItems, addToCart, removeFrom } from '../lib/cartData';
+import { getItems, addToCart, removeFrom, destroyFrom } from '../lib/cartData';
 
 function reducer(state = getItems(), action) {
   switch(action.type) {
@@ -7,6 +7,9 @@ function reducer(state = getItems(), action) {
       return getItems();
     case "REMOVE_ITEM":
       removeFrom(action.item);
+      return getItems();
+    case "DESTROY_ITEM":
+      destroyFrom(action.item);
       return getItems();
     default:
       return state;

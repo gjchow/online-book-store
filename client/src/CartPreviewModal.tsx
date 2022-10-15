@@ -18,10 +18,15 @@ import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
+
 //Taken from https://mui.com/material-ui/react-click-away-listener/#main-content
 // @ts-ignore
-function CartPreviewModal({ appState, removeOldItem }) {
+function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem }) {
   const [open, setOpen] = React.useState(false);
+  const [discount, setDiscount] = React.useState(0);
+
+  // setSubtotal(appState.reduce((a:any, b:any) => (a.price * a.quantity) + (b.price * b.quantity), 0));
+
   // const [cartItems, setItems] = React.useState(getItems());
 
   const handleClick = () => {
@@ -32,9 +37,7 @@ function CartPreviewModal({ appState, removeOldItem }) {
     setOpen(false);
   };
 
-  const removeItem = (item: any) => {
-    removeOldItem(item);
-  }
+
 
   // const styles: SxProps = {
   //   position: 'fixed',
@@ -83,7 +86,7 @@ function CartPreviewModal({ appState, removeOldItem }) {
                       <Box width={'100%'} height={0} borderTop={1} marginBottom={1}></Box>
                       <Box justifyContent={'space-between'} display={'flex'} width={'100%'}>
                         <Box marginLeft={1}>
-                          <IconButton onClick={() => removeOldItem(item)} >
+                          <IconButton onClick={() => destroyOldItem(item)} >
                             <CloseIcon></CloseIcon>
                           </IconButton>
                         </Box>
@@ -101,14 +104,14 @@ function CartPreviewModal({ appState, removeOldItem }) {
                               {item.quantity}
                             </Typography>
                             <Box marginTop={-1.25}>
-                              <IconButton>
+                              <IconButton onClick={() => addNewItem(item)}>
                                 <AddIcon sx={{ fontSize: '20px'}}></AddIcon>
                               </IconButton>
                             </Box>
                           </Box>
                         </Box>
                         <Typography noWrap gutterBottom fontSize={'20px'} marginTop={0.5} marginRight={2}>
-                          ${item.price}
+                          ${parseFloat(`${item.price * item.quantity}`).toFixed(2)}
                         </Typography>
                       </Box>
                     </Box>
@@ -124,7 +127,7 @@ function CartPreviewModal({ appState, removeOldItem }) {
                   Subtotal
                 </Typography>
                 <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
-                  $0.00
+                  ${parseFloat(`${appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) }`).toFixed(2)}
                 </Typography>
               </Box>
               <Box justifyContent={'space-between'} display={'flex'}>
@@ -132,7 +135,7 @@ function CartPreviewModal({ appState, removeOldItem }) {
                   Discount
                 </Typography>
                 <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={'red'}>
-                  -$0.00
+                  -${parseFloat(`${discount}`).toFixed(2)}
                 </Typography>
               </Box>
               <Box justifyContent={'space-between'} display={'flex'}>
@@ -140,7 +143,7 @@ function CartPreviewModal({ appState, removeOldItem }) {
                   HST 13%
                 </Typography>
                 <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
-                  $0.00
+                  ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 0.13}`).toFixed(2)}
                 </Typography>
               </Box>
               <Box justifyContent={'space-between'} display={'flex'}>
@@ -148,7 +151,7 @@ function CartPreviewModal({ appState, removeOldItem }) {
                   Total
                 </Typography>
                 <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2}>
-                  $0.00
+                ${parseFloat(`${(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 1.13}`).toFixed(2)}
                 </Typography>
               </Box>
             </Box>
@@ -166,6 +169,7 @@ const mapStateToProps = (state: any) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   addNewItem: (item: any) => dispatch({ type: "ADD_ITEM", item}),
   removeOldItem: (item: any) => dispatch({ type: "REMOVE_ITEM", item}),
+  destroyOldItem: (item: any) => dispatch({ type: "DESTROY_ITEM", item}),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartPreviewModal);

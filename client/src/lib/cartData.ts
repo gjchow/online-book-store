@@ -25,6 +25,12 @@ export function removeFrom(item: any) {
   }
 }
 
+export function destroyFrom(item: any) {
+  let currentItem = JSON.parse(window.localStorage.getItem("cart-data") || '[]');
+  currentItem = currentItem.filter((i: any) => i.name !== item.name);
+  window.localStorage.setItem("cart-data", JSON.stringify(currentItem));
+}
+
 export function updateItemQuantity(itemName: any, change: 'increase' | 'decrease') {
   const currentItem = JSON.parse(window.localStorage.getItem("cart-data") || '[]');
   const ItemToUpdateIndex = currentItem.findIndex((item: any) => (item.name === itemName));
