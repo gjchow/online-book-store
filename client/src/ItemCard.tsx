@@ -10,19 +10,20 @@ import { connect } from 'react-redux';
 
 //Taken from https://mui.com/material-ui/react-card/#main-content
 // @ts-ignore
-function ItemCard({ addNewItem, item }) {
+function ItemCard({ addNewItem, item, theme }) {
   const handleClick = () => {
     item.quantity = 1;
     addNewItem(item);
   };
 
   return (
-    <Card sx={{ maxWidth: 345, margin: 1 }} >
+    <Card sx={{ maxWidth: 345, marginTop: 2, backgroundColor: theme[30], borderRadius: 3, borderWidth: 0}} >
       <CardMedia
         style={{
           width: "auto",
           maxHeight: "250px",
           margin: "auto",
+          marginTop: 8
         }}
         component="img"
         image={item.image}
@@ -30,16 +31,16 @@ function ItemCard({ addNewItem, item }) {
       />
       <CardContent>
         <Tooltip title={item.name} arrow enterDelay={500} followCursor>
-          <Typography data-testid="itemName" noWrap gutterBottom variant="h5" component="div">
+          <Typography data-testid="itemName" noWrap gutterBottom variant="h5" component="div" color={theme[60]}>
             {item.name}
           </Typography>
         </Tooltip>
-        <Typography data-testid="itemPrice" variant="body1" color="text.secondary">
+        <Typography data-testid="itemPrice" variant="body1" color={theme[60]}>
           ${item.price}
         </Typography>
       </CardContent>
       <CardActions sx={{ justifyContent: "right"}}>
-          <Button variant="contained" onClick={handleClick}>Add to Cart</Button>
+          <Button variant="contained" onClick={handleClick} sx={{backgroundColor: theme[10], color: theme[60] }}>Add to Cart</Button>
       </CardActions>
     </Card>
   );
