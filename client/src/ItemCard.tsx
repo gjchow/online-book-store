@@ -31,7 +31,7 @@ function ItemCard({ addNewItem, item }) {
             {item.name}
           </Typography>
         </Tooltip>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body1" color="text.secondary">
           ${item.price}
         </Typography>
       </CardContent>

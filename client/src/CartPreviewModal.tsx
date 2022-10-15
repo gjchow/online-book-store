@@ -15,6 +15,8 @@ import { removeFrom, addToCart } from './lib/cartData';
 import CloseIcon from '@mui/icons-material/Close';
 import { connect } from 'react-redux';
 import Typography from '@mui/material/Typography';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 //Taken from https://mui.com/material-ui/react-click-away-listener/#main-content
 // @ts-ignore
@@ -77,18 +79,38 @@ function CartPreviewModal({ appState, removeOldItem }) {
               <List>
                 {appState.map((item: any, index:any) => (
                   <ListItem key={item.name} disablePadding>
-                    <Box justifyContent={'space-between'} display={'flex'} width={'100%'}>
-                      <Box marginLeft={1}>
-                        <IconButton onClick={() => removeOldItem(item)} >
-                          <CloseIcon></CloseIcon>
-                        </IconButton>
+                    <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'column'} width={'100%'}>
+                      <Box width={'100%'} height={0} borderTop={1} marginBottom={1}></Box>
+                      <Box justifyContent={'space-between'} display={'flex'} width={'100%'}>
+                        <Box marginLeft={1}>
+                          <IconButton onClick={() => removeOldItem(item)} >
+                            <CloseIcon></CloseIcon>
+                          </IconButton>
+                        </Box>
+                        <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'column'}>
+                          <Typography noWrap gutterBottom fontSize={'px'} component="div" alignItems={'center'}>
+                          {item.name}
+                          </Typography>
+                          <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'row'}>
+                            <Box marginTop={-1.25}>
+                              <IconButton onClick={() => removeOldItem(item)} >
+                                <RemoveIcon sx={{ fontSize: '20px'}}></RemoveIcon>
+                              </IconButton>
+                            </Box>
+                            <Typography noWrap gutterBottom fontSize={'16px'} component="div" alignItems={'center'} marginTop={-0.5}>
+                              {item.quantity}
+                            </Typography>
+                            <Box marginTop={-1.25}>
+                              <IconButton>
+                                <AddIcon sx={{ fontSize: '20px'}}></AddIcon>
+                              </IconButton>
+                            </Box>
+                          </Box>
+                        </Box>
+                        <Typography noWrap gutterBottom fontSize={'20px'} marginTop={0.5} marginRight={2}>
+                          ${item.price}
+                        </Typography>
                       </Box>
-                      <Typography noWrap gutterBottom fontSize={'20px'} component="span" marginTop={0.5}>
-                       {item.quantity} X {item.name}
-                      </Typography>
-                      <Typography noWrap gutterBottom fontSize={'20px'} component="span" marginTop={0.5} marginRight={2}>
-                        {item.price}
-                      </Typography>
                     </Box>
                   </ListItem>
                 ))}
@@ -96,6 +118,7 @@ function CartPreviewModal({ appState, removeOldItem }) {
             </Box>
             </Box>
             <Box>
+              <Box width={'100%'} height={0} borderTop={1}></Box>
               <Box justifyContent={'space-between'} display={'flex'}>
                 <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2}>
                   Subtotal
