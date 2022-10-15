@@ -39,7 +39,7 @@ async function checkCoupon(couponId, items) {
 
   const coupon =  coupons[0];
 
-  if (coupon.tags.find(tag => tag == "ALL")){
+  if (coupon.tags.find(tag => (tag === "ALL"))){
     return true;
   }
 
