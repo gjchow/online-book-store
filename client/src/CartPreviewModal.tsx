@@ -63,7 +63,7 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
       let applyCode = false;
       await fetch(`${api}/check-coupon/${couponCode}`, {
         method: "POST",
-        body: JSON.stringify(appState.map((i: any) => i.name))
+        body: JSON.stringify({ itemNames: appState.map((i: any) => i.name)})
       })
       .then(res => res.json())
       .then(
