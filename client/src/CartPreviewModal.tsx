@@ -76,7 +76,7 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem 
         sethelperMessage("Can't apply Coupon Code to items in your cart");
       } else {
         let coupon: any = {};
-        await fetch(`${api}/coupons/${couponCode}`)
+        await fetch(`${api}/coupon/${couponCode}`)
         .then(res => res.json())
         .then(
           (result) => {
