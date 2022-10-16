@@ -6,7 +6,7 @@ The application is deployed: https://assignment-2-12-gjchow-ranachi.herokuapp.co
 
 ## Application
 
-[Application Demo](./images/appdemo.mov)
+![Application Demo](./images/output.gif)
 
 * Notes:
   * Coupon code: 1111 applies $10 discount to any book
