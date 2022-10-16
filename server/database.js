@@ -41,17 +41,20 @@ async function checkCoupon(couponId, items) {
 
   const coupon =  coupons[0];
 
-  if (coupon.tags.find(tag => (tag === "ALL"))){
-    return true;
-  }
 
-  const couponItems =  coupons[0].items;
-
-  for (let i = 0; i < couponItems.length; i++) {
-    if (items.find(item => couponItems[i] == item)) {
+    if (coupon.tags.find(tag => (tag === "ALL"))){
       return true;
     }
-  }
+
+    if (items) {
+      const couponItems =  coupons[0].items;
+
+      for (let i = 0; i < couponItems.length; i++) {
+        if (items.find(item => couponItems[i] == item)) {
+          return true;
+        }
+      }
+    }
 
   return false;
 }

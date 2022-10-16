@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
 
 
 //Taken from https://mui.com/material-ui/react-click-away-listener/#main-content
@@ -35,25 +34,6 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
     sethelperMessage("");
   };
 
-  const CssTextField = styled(TextField)({
-    '& label.Mui-focused': {
-      color: theme[30],
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: theme[30],
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: theme[30],
-      },
-      '&:hover fieldset': {
-        borderColor: theme[30],
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: theme[30],
-      },
-    },
-  });
   const handleChange = (event: any) => {
     setCouponCode(event.target.value);
   }
@@ -176,7 +156,7 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
               <Box>
                 <Box width={'100%'} height={0} borderTop={1} sx={{ borderColor: theme[30]}}></Box>
                 <Box component="form" noValidate autoComplete="off" display={'flex'} justifyContent={'center'} onSubmit={async (e) => await handleSubmit(e)}>
-                <CssTextField
+                <TextField
                       error={invalidCode}
                       id="coupon-code"
                       label="Coupon Code"
@@ -185,7 +165,7 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
                       helperText={helperMessage}
                       value={couponCode}
                       onChange={handleChange}
-                      inputProps={{ style: { borderColor: theme[30]}}}
+                      color="secondary"
                     />
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>

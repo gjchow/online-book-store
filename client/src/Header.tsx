@@ -12,7 +12,7 @@ export default function Header(props: any) {
       <AppBar position="static">
         <Toolbar sx={{ backgroundColor: props.theme[10] }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} color={props.theme[60]}>
-            CSC304 Shopping
+            CSC301 Shopping
           </Typography>
           <CartPreviewModal theme={props.theme}></CartPreviewModal>
         </Toolbar>
