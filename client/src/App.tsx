@@ -6,9 +6,9 @@ import Box from '@mui/material/Box';
 
 function App() {
   const theme = {
-    60: '#2f97c1',
-    30: '#E8E9ED',
-    10: '#0E103D'
+    60: '#FFFFFF',
+    30: '#DADADA',
+    10: '#000000'
   }
   return (
     <Box sx={{backgroundColor: theme[60]}}>

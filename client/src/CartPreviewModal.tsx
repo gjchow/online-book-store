@@ -103,7 +103,7 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
           >
             <Box justifyContent={'space-between'} display={'flex'} flexDirection={'column'} height={'100%'}>
               <Box display={'flex'} flexDirection={'column'}>
-                <Box width={'100%'} display={'flex'} flexDirection={'column'} sx={{backgroundColor: theme[30]}}>
+                <Box width={'100%'} display={'flex'} flexDirection={'column'} sx={{backgroundColor: theme[10]}}>
                   <Typography noWrap gutterBottom variant="h4" component="div" alignSelf={'center'} marginTop={2} color={theme[60]}>
                     My Cart
                   </Typography>
@@ -116,34 +116,34 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
                     {appState.map((item: any, index:any) => (
                       <ListItem key={item.name} disablePadding>
                         <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'column'} width={'100%'}>
-                          <Box width={'100%'} height={0} borderTop={1} marginBottom={1} sx={{ borderColor: theme[30]}}></Box>
+                          <Box width={'100%'} height={0} borderTop={1} marginBottom={1} sx={{ borderColor: theme[10]}}></Box>
                           <Box justifyContent={'space-between'} display={'flex'} width={'100%'}>
                             <Box marginRight={1} marginLeft={1}>
                               <IconButton onClick={() => destroyOldItem(item)} >
-                                <CloseIcon sx={{ color: theme[30]}}></CloseIcon>
+                                <CloseIcon sx={{ color: theme[10]}}></CloseIcon>
                               </IconButton>
                             </Box>
                             <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'column'} marginRight={1} marginLeft={1}>
-                              <Typography noWrap gutterBottom fontSize={'px'} component="div" alignItems={'center'} color={theme[30]}>
+                              <Typography noWrap gutterBottom fontSize={'px'} component="div" alignItems={'center'} color={theme[10]}>
                               {item.name}
                               </Typography>
                               <Box display={'flex'} alignItems={'center'} justifyContent={'center'} flexDirection={'row'}>
                                 <Box marginTop={-1.25}>
                                   <IconButton onClick={() => removeOldItem(item)} >
-                                    <RemoveIcon sx={{ fontSize: '20px', color: theme[30]}}></RemoveIcon>
+                                    <RemoveIcon sx={{ fontSize: '20px', color: theme[10]}}></RemoveIcon>
                                   </IconButton>
                                 </Box>
-                                <Typography data-testid="quantity" noWrap gutterBottom fontSize={'16px'} component="div" alignItems={'center'} marginTop={-0.5} color={theme[30]}>
+                                <Typography data-testid="quantity" noWrap gutterBottom fontSize={'16px'} component="div" alignItems={'center'} marginTop={-0.5} color={theme[10]}>
                                   {item.quantity}
                                 </Typography>
                                 <Box marginTop={-1.25}>
                                   <IconButton data-testid="increaseQuantity" onClick={() => addNewItem(item)}>
-                                    <AddIcon sx={{ fontSize: '20px', color: theme[30]}}></AddIcon>
+                                    <AddIcon sx={{ fontSize: '20px', color: theme[10]}}></AddIcon>
                                   </IconButton>
                                 </Box>
                               </Box>
                             </Box>
-                            <Typography noWrap gutterBottom fontSize={'20px'} marginTop={0.5} marginRight={2} marginLeft={1} color={theme[30]}>
+                            <Typography noWrap gutterBottom fontSize={'20px'} marginTop={0.5} marginRight={2} marginLeft={1} color={theme[10]}>
                               ${parseFloat(`${item.price * item.quantity}`).toFixed(2)}
                             </Typography>
                           </Box>
@@ -154,7 +154,7 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
                 </Box>
               </Box>
               <Box>
-                <Box width={'100%'} height={0} borderTop={1} sx={{ borderColor: theme[30]}}></Box>
+                <Box width={'100%'} height={0} borderTop={1} sx={{ borderColor: theme[10]}}></Box>
                 <Box component="form" noValidate autoComplete="off" display={'flex'} justifyContent={'center'} onSubmit={async (e) => await handleSubmit(e)}>
                 <TextField
                       error={invalidCode}
@@ -165,19 +165,18 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
                       helperText={helperMessage}
                       value={couponCode}
                       onChange={handleChange}
-                      color="secondary"
                     />
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
-                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[30]}>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[10]}>
                     Subtotal
                   </Typography>
-                  <Typography data-testid="cartSubtotal" noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[30]}>
+                  <Typography data-testid="cartSubtotal" noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[10]}>
                     ${parseFloat(`${appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) }`).toFixed(2)}
                   </Typography>
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
-                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[30]}>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[10]}>
                     Discount
                   </Typography>
                   <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={'red'}>
@@ -185,18 +184,18 @@ function CartPreviewModal({ appState, removeOldItem, addNewItem, destroyOldItem,
                   </Typography>
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
-                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[30]}>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[10]}>
                     HST 13%
                   </Typography>
-                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[30]}>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[10]}>
                     ${parseFloat(`${Math.max(0,(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 0.13)}`).toFixed(2)}
                   </Typography>
                 </Box>
                 <Box justifyContent={'space-between'} display={'flex'}>
-                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[30]}>
+                  <Typography noWrap gutterBottom variant="h5" component="span" marginLeft={2} color={theme[10]}>
                     Total
                   </Typography>
-                  <Typography data-testid="cartTotal" noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[30]}>
+                  <Typography data-testid="cartTotal" noWrap gutterBottom variant="h5" component="span" marginRight={2} color={theme[10]}>
                   ${parseFloat(`${Math.max(0,(appState.reduce((a:any, b:any) => (a) + (b.price * b.quantity), 0) - discount) * 1.13)}`).toFixed(2)}
                   </Typography>
                 </Box>

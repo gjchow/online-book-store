@@ -17,7 +17,7 @@ function ItemCard({ addNewItem, item, theme }) {
   };
 
   return (
-    <Card sx={{ maxWidth: 345, marginTop: 2, backgroundColor: theme[30], borderRadius: 3, borderWidth: 0}} >
+    <Card sx={{ maxWidth: 345, marginTop: 2, backgroundColor: theme[30], borderRadius: 3, borderStyle: 'solid', borderColor: theme[10]}} >
       <CardMedia
         style={{
           width: "auto",
@@ -31,11 +31,11 @@ function ItemCard({ addNewItem, item, theme }) {
       />
       <CardContent>
         <Tooltip title={item.name} arrow enterDelay={500} followCursor>
-          <Typography data-testid="itemName" noWrap gutterBottom variant="h5" component="div" color={theme[60]}>
+          <Typography data-testid="itemName" noWrap gutterBottom variant="h5" component="div" color={theme[10]}>
             {item.name}
           </Typography>
         </Tooltip>
-        <Typography data-testid="itemPrice" variant="body1" color={theme[60]}>
+        <Typography data-testid="itemPrice" variant="body1" color={theme[10]}>
           ${item.price}
         </Typography>
       </CardContent>
