@@ -1,8 +1,6 @@
-# CSC301 - Assignment 2
+# Online Book Store
 
-## Production Deployment
-
-The application is deployed: https://assignment-2-12-gjchow-ranachi.herokuapp.com/
+This application is a simple online book store where users can add books to the cart, view the cart and apply discounts to their totals.
 
 ## Application
 
